@@ -1,53 +1,64 @@
 import streamlit as st
 
 # Page setup
-st.set_page_config(page_title="Japa Counter", layout="centered")
+st.set_page_config(page_title="🕉 Japa Counter", page_icon="📿", layout="centered")
 
-# Initialize session state
+# Session state
 if "count" not in st.session_state:
     st.session_state.count = 0
-
 if "malas" not in st.session_state:
     st.session_state.malas = 0
 
-# Title
-st.markdown("## 🕉 Japa Counter")
-st.markdown("📿 A simple digital mala (108 japa = 1 mala)")
-st.markdown("hare krishna hare krishna krishna krishna hare hare hare rama hare rama rama rama hare hare")
+# CSS for styling
+st.markdown("""
+    <style>
+    .main {
+        background: linear-gradient(to bottom, #0f172a, #1e293b);
+        color: #fef3c7;
+        text-align: center;
+        font-family: 'Georgia', serif;
+    }
+    .count {
+        font-size: 72px;
+        font-weight: bold;
+        margin: 20px;
+        color: #facc15;
+        text-shadow: 2px 2px 5px #000000;
+    }
+    .mala {
+        font-size: 24px;
+        color: #a78bfa;
+        margin-bottom: 30px;
+    }
+    .btn {
+        font-size: 20px;
+        padding: 15px 0;
+        margin: 10px 0;
+        border-radius: 15px;
+        border: none;
+        width: 100%;
+    }
+    .add { background-color: #6366f1; color: white; }
+    .reset { background-color: #1e293b; color: #fef3c7; border: 1px solid #fef3c7; }
+    </style>
+""", unsafe_allow_html=True)
 
-st.divider()
+st.markdown('<div class="main">', unsafe_allow_html=True)
 
-# Display counts
-st.markdown(
-    f"<h1 style='text-align:center'>{st.session_state.count}</h1>",
-    unsafe_allow_html=True
-)
-st.markdown(
-    f"<p style='text-align:center; font-size:20px;'>Malas: {st.session_state.malas}</p>",
-    unsafe_allow_html=True
-)
+st.markdown(f'<div class="count">{st.session_state.count}</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="mala">Malas completed: {st.session_state.malas} 📿</div>', unsafe_allow_html=True)
 
-st.divider()
-
-# Buttons
-col1, col2 = st.columns(2)
-
+col1, col2 = st.columns([1,1])
 with col1:
-    if st.button("＋ 1 Japa", use_container_width=True):
+    if st.button("＋ 1 Japa", key="add", help="Tap for each mantra"):
         st.session_state.count += 1
         if st.session_state.count == 108:
             st.session_state.malas += 1
             st.session_state.count = 0
-
 with col2:
-    if st.button("Reset", use_container_width=True):
+    if st.button("Reset", key="reset", help="Reset count & malas"):
         st.session_state.count = 0
         st.session_state.malas = 0
 
-# Footer note
-st.markdown(
-    "<p style='text-align:center; color:gray; font-size:14px;'>"
-    "Use with breath, mantra, or silence 🌿"
-    "</p>",
-    unsafe_allow_html=True
-)
+st.markdown("<p style='text-align:center; color:#cbd5e1; font-size:16px;'>Keep your mind calm, chant with love 🌿</p>", unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
